@@ -1,9 +1,9 @@
 `include "defines.v"
 
-module IDStage (clk, rst, hazard_detected_in, is_imm_out, ST_or_BNE_out, instruction, reg1, reg2, src1, src2, src2_forw, val1, val2, brTaken, EXE_CMD, MEM_R_EN, MEM_W_EN, WB_EN, branch_comm,destOut,COMP_EN,MUL_EN,MOV_EN_OUT);
+module IDStage (clk, rst, hazard_detected_in, is_imm_out, ST_or_BNE_out, instruction, reg1, reg2, src1, src2, src2_forw, val1, val2, brTaken, EXE_CMD, MEM_R_EN, MEM_W_EN, WB_EN, branch_comm,destOut,COMP_EN,MUL_EN,MOV_EN_OUT,jump_EN);
   input clk, rst, hazard_detected_in;
   input [`WORD_LEN-1:0] instruction, reg1, reg2;
-  output brTaken, MEM_R_EN, MEM_W_EN, WB_EN, is_imm_out, ST_or_BNE_out,COMP_EN,MOV_EN_OUT,MUL_EN;
+  output brTaken, MEM_R_EN, MEM_W_EN, WB_EN, is_imm_out, ST_or_BNE_out,COMP_EN,MOV_EN_OUT,MUL_EN,jump_EN;
   output [1:0] branch_comm;
   output [`EXE_CMD_LEN-1:0] EXE_CMD;
   output [`REG_FILE_ADDR_LEN-1:0] src1, src2, src2_forw,destOut;
@@ -29,7 +29,8 @@ module IDStage (clk, rst, hazard_detected_in, is_imm_out, ST_or_BNE_out, instruc
     .MEM_W_EN(MEM_W_EN),
     .Is_Comp(COMP_EN),
     .MOV_EN(MOV_EN_OUT),
-    .Is_Mul(MUL_EN)
+    .Is_Mul(MUL_EN),
+    .is_jump(jump_EN)
   );
 
   // mux #(.LENGTH(`REG_FILE_ADDR_LEN)) mux_src2 ( // determins the register source 2 for register file

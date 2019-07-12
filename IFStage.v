@@ -1,8 +1,8 @@
 `include "defines.v"
 // `include "mux.v"
 
-module IFStage (clk, rst, brTaken,IsJump, brOffset, freeze, PC, instruction);
-  input clk, rst, brTaken, freeze,IsJump;
+module IFStage (clk, rst, brTaken, brOffset, freeze, PC, instruction ,jump_en);
+  input clk, rst, brTaken, freeze , jump_en;
   input [`WORD_LEN-1:0] brOffset;
   output [`WORD_LEN-1:0] PC, instruction;
 
@@ -32,7 +32,7 @@ module IFStage (clk, rst, brTaken,IsJump, brOffset, freeze, PC, instruction);
   mux #(.LENGTH(`WORD_LEN)) JPTakenMux ( // check for jump and set PCin
     .in1(adder2PC1),
     .in2(brOffsetTimes2),
-    .sel(IsJump),
+    .sel(jump_en),
     .out(PCIn)
   );
 
