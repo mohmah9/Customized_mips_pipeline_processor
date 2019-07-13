@@ -12,16 +12,16 @@ module instructionMem (rst, addr, instruction);
   	if (rst) begin
         // No nop added in between instructions since there is a hazard detection unit
 
-        instMem[0] <= 8'b10000000; //-- Addi	r1,r0,10
-        instMem[1] <= 8'b00100000;
+        instMem[0] <= 8'b00000110; 
+        instMem[1] <= 8'b00100000; //Add 6 ,2 
        
-        instMem[2] <= 8'b00000000;
-        instMem[3] <= 8'b00001010;
+        instMem[2] <= 8'b00000110;
+        instMem[3] <= 8'b00100000;
 
-        instMem[4] <= 8'b00000100; //-- Add 	r2,r0,r1
-        instMem[5] <= 8'b01000000;
+        instMem[4] <= 8'b00110001; //-- Addi 	d0,6
+        instMem[5] <= 8'b00000110;
        
-        instMem[6] <= 8'b00001000;
+        instMem[6] <= 8'b10001000;
         instMem[7] <= 8'b00000000;
 
         instMem[8] <= 8'b00001100; //-- sub	r3,r0,r1
@@ -33,83 +33,83 @@ module instructionMem (rst, addr, instruction);
         instMem[12] <= 8'b00010100; //-- And	r4,r2,r3
         instMem[13] <= 8'b10000010;
         
-        instMem[14] <= 8'b00011000;
-        instMem[15] <= 8'b00000000;
+        // instMem[14] <= 8'b00011000;
+        // instMem[15] <= 8'b00000000;
 
-        instMem[16] <= 8'b10000100; //-- Subi	r5,r0,564
-        instMem[17] <= 8'b10100000;
+        // instMem[16] <= 8'b10000100; //-- Subi	r5,r0,564
+        // instMem[17] <= 8'b10100000;
        
-        instMem[18] <= 8'b00000010;
-        instMem[19] <= 8'b00110100;
+        // instMem[18] <= 8'b00000010;
+        // instMem[19] <= 8'b00110100;
 
-        instMem[20] <= 8'b00011000; //-- or	r5,r5,r3
-        instMem[21] <= 8'b10100101;
+        // instMem[20] <= 8'b00011000; //-- or	r5,r5,r3
+        // instMem[21] <= 8'b10100101;
         
-        instMem[22] <= 8'b00011000;
-        instMem[23] <= 8'b00000000;
+        // instMem[22] <= 8'b00011000;
+        // instMem[23] <= 8'b00000000;
 
-        instMem[24] <= 8'b00011100; //-- nor 	r6,r5,r0
-        instMem[25] <= 8'b11000101;
+        // instMem[24] <= 8'b00011100; //-- nor 	r6,r5,r0
+        // instMem[25] <= 8'b11000101;
        
-        instMem[26] <= 8'b00000000;
-        instMem[27] <= 8'b00000000;
+        // instMem[26] <= 8'b00000000;
+        // instMem[27] <= 8'b00000000;
 
-        instMem[28] <= 8'b00100000; //-- xor	r0,r5,r1
-        instMem[29] <= 8'b00000101;
+        // instMem[28] <= 8'b00100000; //-- xor	r0,r5,r1
+        // instMem[29] <= 8'b00000101;
        
-        instMem[30] <= 8'b00001000;
-        instMem[31] <= 8'b00000000;
+        // instMem[30] <= 8'b00001000;
+        // instMem[31] <= 8'b00000000;
 
-        instMem[32] <= 8'b00100000; //-- xor	r7,r5,r0
-        instMem[33] <= 8'b11100101;
+        // instMem[32] <= 8'b00100000; //-- xor	r7,r5,r0
+        // instMem[33] <= 8'b11100101;
        
-        instMem[34] <= 8'b00001000;
-        instMem[35] <= 8'b00000000;
+        // instMem[34] <= 8'b00001000;
+        // instMem[35] <= 8'b00000000;
 
-        instMem[36] <= 8'b00100100; //-- sla	r7,r4,r2
-        instMem[37] <= 8'b11100100;
-        instMem[38] <= 8'b00010000;
-        instMem[39] <= 8'b00000000;
+        // instMem[36] <= 8'b00100100; //-- sla	r7,r4,r2
+        // instMem[37] <= 8'b11100100;
+        // instMem[38] <= 8'b00010000;
+        // instMem[39] <= 8'b00000000;
 
-        instMem[40] <= 8'b00101001; //-- sll	r8,r3,r2
-        instMem[41] <= 8'b00000011;
-        instMem[42] <= 8'b00010000;
-        instMem[43] <= 8'b00000000;
+        // instMem[40] <= 8'b00101001; //-- sll	r8,r3,r2
+        // instMem[41] <= 8'b00000011;
+        // instMem[42] <= 8'b00010000;
+        // instMem[43] <= 8'b00000000;
 
-        instMem[44] <= 8'b00101101; //-- sra	r9,r6,r2
-        instMem[45] <= 8'b00100110;
-        instMem[46] <= 8'b00010000;
-        instMem[47] <= 8'b00000000;
+        // instMem[44] <= 8'b00101101; //-- sra	r9,r6,r2
+        // instMem[45] <= 8'b00100110;
+        // instMem[46] <= 8'b00010000;
+        // instMem[47] <= 8'b00000000;
 
-        instMem[48] <= 8'b00110001; //-- srl	r10,r6,r2
-        instMem[49] <= 8'b01000110;
-        instMem[50] <= 8'b00010000;
-        instMem[51] <= 8'b00000000;
+        // instMem[48] <= 8'b00110001; //-- srl	r10,r6,r2
+        // instMem[49] <= 8'b01000110;
+        // instMem[50] <= 8'b00010000;
+        // instMem[51] <= 8'b00000000;
 
-        instMem[52] <= 8'b10000000; //-- Addi 	r1,r0,1024
-        instMem[53] <= 8'b00100000;
-        instMem[54] <= 8'b00000100;
-        instMem[55] <= 8'b00000000;
+        // instMem[52] <= 8'b10000000; //-- Addi 	r1,r0,1024
+        // instMem[53] <= 8'b00100000;
+        // instMem[54] <= 8'b00000100;
+        // instMem[55] <= 8'b00000000;
 
-        instMem[56] <= 8'b10010100; //-- st	r2,r1,0
-        instMem[57] <= 8'b01000001;
-        instMem[58] <= 8'b00000000;
-        instMem[59] <= 8'b00000000;
+        // instMem[56] <= 8'b10010100; //-- st	r2,r1,0
+        // instMem[57] <= 8'b01000001;
+        // instMem[58] <= 8'b00000000;
+        // instMem[59] <= 8'b00000000;
 
-        instMem[60] <= 8'b10010001; //-- ld	r11,r1,0
-        instMem[61] <= 8'b01100001;
-        instMem[62] <= 8'b00000000;
-        instMem[63] <= 8'b00000000;
+        // instMem[60] <= 8'b10010001; //-- ld	r11,r1,0
+        // instMem[61] <= 8'b01100001;
+        // instMem[62] <= 8'b00000000;
+        // instMem[63] <= 8'b00000000;
 
-        instMem[64] <= 8'b10010100; //-- st	r3,r1,4
-        instMem[65] <= 8'b01100001;
-        instMem[66] <= 8'b00000000;
-        instMem[67] <= 8'b00000100;
+        // instMem[64] <= 8'b10010100; //-- st	r3,r1,4
+        // instMem[65] <= 8'b01100001;
+        // instMem[66] <= 8'b00000000;
+        // instMem[67] <= 8'b00000100;
 
-        instMem[68] <= 8'b10010100; //-- st	r4,r1,8
-        instMem[69] <= 8'b10000001;
-        instMem[70] <= 8'b00000000;
-        instMem[71] <= 8'b00001000;
+        // instMem[68] <= 8'b10010100; //-- st	r4,r1,8
+        // instMem[69] <= 8'b10000001;
+        // instMem[70] <= 8'b00000000;
+        // instMem[71] <= 8'b00001000;
 
         // instMem[72] <= 8'b10010100; //-- st	r5,r1,12
         // instMem[73] <= 8'b10100001;
@@ -240,5 +240,5 @@ module instructionMem (rst, addr, instruction);
       end
     end
 
-  assign instruction = {instMem[address], instMem[address + 1], instMem[address + 2], instMem[address + 3]};
+  assign instruction = {instMem[address], instMem[address + 1]};
 endmodule // insttructionMem

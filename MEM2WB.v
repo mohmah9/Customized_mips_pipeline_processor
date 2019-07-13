@@ -27,4 +27,8 @@ module MEM2WB (clk, rst, WB_EN_IN, MEM_R_EN_IN, ALUResIn, memReadValIn, destIn,
       MUL_EN_OUT <= MUL_EN_IN;
     end
   end
+  always @ (negedge clk) begin
+    $display("MEM2WB : ALUResult is : %b",ALURes);    
+    $display("MEM2WB dest  is : %b",dest);   
+end
 endmodule // MEM2WB

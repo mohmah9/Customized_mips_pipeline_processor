@@ -37,5 +37,10 @@ module ID2EXE (clk, rst, destIn, reg2In, val1In, val2In, PCIn, EXE_CMD_IN, MEM_R
       BA_reg_out  <= BA_reg;
       MUL_EN_OUT <= IsMul;
     end
+    // $display("ID2EXE dest  is : %b",dest);
+    // $display("ID2EXE destIN  is : %b",destIn);
+
+    // $display("ID2EXE value 1 is : %b",val1);
+
   end
 endmodule // ID2EXE

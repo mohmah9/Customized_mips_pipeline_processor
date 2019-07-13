@@ -8,7 +8,7 @@ module IFStage (clk, rst, brTaken, brOffset, freeze, PC, instruction ,jump_en);
 
   wire [`WORD_LEN-1:0] adderIn1, adderOut, brOffsetTimes2,adder2PC1,PCIn;
 
-
+  
   adder add2 ( // pc add by 2 for next instruction
     .in1(PC),
     .in2(16'd2),
@@ -51,7 +51,18 @@ module IFStage (clk, rst, brTaken, brOffset, freeze, PC, instruction ,jump_en);
   );
   always @(instruction)
   begin
-    $display("the instruction is: %b",instruction);
+    // $display("the instruction is: %b",instruction);
+    // $display("the PC is: %b",PC);
+    // $display("the adderIn1 is: %b",adderIn1);
+    // $display("the branch taken is: %b",brTaken);
+    // $display("the jump_en is: %b",jump_en);
+    // $display("the PCIN is: %b",PCIn);
+    // $display("the first mux answer is: %b",adder2PC1);
+
+
+    // .out(adder2PC1)
+
+
   end
   assign brOffsetTimes2 = brOffset << 1;
 endmodule // IFStage

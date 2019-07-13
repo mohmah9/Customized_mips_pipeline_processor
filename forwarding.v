@@ -22,5 +22,7 @@ module forwarding_EXE (src1_EXE, src2_EXE, ST_src_EXE, dest_MEM, dest_WB, WB_EN_
     // determining forwarding control signal for ALU val2
     if (WB_EN_MEM && src2_EXE == dest_MEM) val2_sel <= 2'd1;
     else if (WB_EN_WB && src2_EXE == dest_WB) val2_sel <= 2'd2;
+    // $display("forwarding selector 1 is : %b",val1_sel);
+    // $display("forwarding selector 2 is : %b",val2_sel);    
   end
 endmodule // forwarding

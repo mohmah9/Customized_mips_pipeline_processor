@@ -1,15 +1,15 @@
 `include "defines.v"
 
-module IDStage (clk, rst, hazard_detected_in, is_imm_out, ST_or_BNE_out, instruction, reg1, reg2, src1, src2, src2_forw, val1, val2, brTaken, EXE_CMD, MEM_R_EN, MEM_W_EN, WB_EN, branch_comm,destOut,COMP_EN,MUL_EN,MOV_EN_OUT,jump_EN);
+module IDStage (clk, rst, hazard_detected_in, is_imm_out, ST_or_BNE_out, instruction, reg1, reg2, src1, src2, src2_forw, val1, val2, brTaken, EXE_CMD, MEM_R_EN, MEM_W_EN, WB_EN, branch_comm,destOut,COMP_EN,MUL_EN,MOV_EN_OUT,jump_EN,is_CLR);
   input clk, rst, hazard_detected_in;
   input [`WORD_LEN-1:0] instruction, reg1, reg2;
-  output brTaken, MEM_R_EN, MEM_W_EN, WB_EN, is_imm_out, ST_or_BNE_out,COMP_EN,MOV_EN_OUT,MUL_EN,jump_EN;
+  output brTaken, MEM_R_EN, MEM_W_EN, WB_EN, is_imm_out, ST_or_BNE_out,COMP_EN,MOV_EN_OUT,MUL_EN,jump_EN,is_CLR;
   output [1:0] branch_comm;
   output [`EXE_CMD_LEN-1:0] EXE_CMD;
   output [`REG_FILE_ADDR_LEN-1:0] src1, src2, src2_forw,destOut;
   output [`WORD_LEN-1:0] val1, val2;
 
-  wire CU2and, Cond2and;
+  wire CU2and, Cond2and,COMP_EN_WIRE;
   wire [1:0] CU2Cond;
   wire Is_Imm;
   wire [`WORD_LEN-1:0] signExt2Mux;
@@ -27,7 +27,7 @@ module IDStage (clk, rst, hazard_detected_in, is_imm_out, ST_or_BNE_out, instruc
     .WB_EN(WB_EN),
     .MEM_R_EN(MEM_R_EN),
     .MEM_W_EN(MEM_W_EN),
-    .Is_Comp(COMP_EN),
+    .Is_Comp(COMP_EN_WIRE),
     .MOV_EN(MOV_EN_OUT),
     .Is_Mul(MUL_EN),
     .is_jump(jump_EN)
@@ -56,7 +56,7 @@ module IDStage (clk, rst, hazard_detected_in, is_imm_out, ST_or_BNE_out, instruc
   mux #(.LENGTH(`REG_FILE_ADDR_LEN)) destMux (
     .in1(instruction[11:8]),
     .in2(4'd9),
-    .sel(Is_Comp),
+    .sel(COMP_EN_WIRE),
     .out(destOut)
   );
   signExtend signExtend(
@@ -64,22 +64,24 @@ module IDStage (clk, rst, hazard_detected_in, is_imm_out, ST_or_BNE_out, instruc
     .out(signExt2Mux)
   );
 
-  conditionChecker conditionChecker (
-    .reg1(reg1),
-    .reg2(reg2),
-    .cuBranchComm(CU2Cond),
-    .brCond(Cond2and)
-  );
-  always @(instruction)
+  // conditionChecker conditionChecker (
+  //   .reg1(reg1),
+  //   .reg2(reg2),
+  //   .cuBranchComm(CU2Cond),
+  //   .brCond(Cond2and)
+  // );
+  always @(negedge clk)
   begin
-    $display("ID satge %b",reg1);
-    $display("ID satge 2 %b",reg2);
+    $display("IDStage: Is_Comp %b",COMP_EN_WIRE);
+    $display("IDStage: destOut %b",destOut);
+    // $display("ID stage 2 %b",reg2);
   end
-  assign brTaken = CU2and && Cond2and;
+  assign brTaken = CU2and ;
   assign val1 = reg1;
   assign src1 = instruction[11:8];
   assign src2 = instruction[7:4];
   assign is_imm_out = Is_Imm;
   assign ST_or_BNE_out = ST_or_BNE;
   assign branch_comm = CU2Cond;
+  assign COMP_EN = COMP_EN_WIRE;
 endmodule // IDStage

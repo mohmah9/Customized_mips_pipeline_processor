@@ -1,4 +1,4 @@
-`timescale 1ns/1ns
+`timescale 1s/1s
 
 module testbench ();
   reg clk,rst, forwarding_EN;
@@ -12,7 +12,7 @@ module testbench ();
   initial begin
     rst = 1;
     forwarding_EN = 0;
-    #100
+    #1000
     rst = 0;
   end
 endmodule // test

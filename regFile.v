@@ -1,7 +1,7 @@
 `include "defines.v"
 
-module regFile (clk, rst, src1, src2, dest, writeVal, writeEn, reg1, reg2,isComp,isMove,Immediate,BAreg,is_mul,High);
-  input clk, rst, writeEn,isComp,isMove,is_mul;
+module regFile (clk, rst, src1, src2, dest, writeVal, writeEn, reg1, reg2,isComp,isMove,Immediate,BAreg,is_mul,High,is_clr);
+  input clk, rst, writeEn,isComp,isMove,is_mul,is_clr;
   input [`REG_FILE_ADDR_LEN-1:0] src1, src2, dest;
   input [`WORD_LEN-1:0] writeVal,High;
   input [11:0] Immediate;
@@ -22,6 +22,7 @@ module regFile (clk, rst, src1, src2, dest, writeVal, writeEn, reg1, reg2,isComp
     else if (writeEn) regMem[dest] <= writeVal;
     regMem[0] <= 0;
     if (isMove) regMem[src1] <= Immediate;
+    if (is_clr) regMem[src1] <= 0;
     if (isComp) begin
       if (writeVal == 0) begin
         regMem[9][0]<=1;
@@ -41,4 +42,9 @@ module regFile (clk, rst, src1, src2, dest, writeVal, writeEn, reg1, reg2,isComp
   assign reg1 = (regMem[src1]);
   assign reg2 = (regMem[src2]);
   assign BAreg = (regMem[10]);
+  always @(posedge clk)
+  begin
+    $display("d0 in the register file is : %b" , regMem[dest]);
+    // $display("source 1 of the register file is : %b" , src1);
+  end
 endmodule // regFile

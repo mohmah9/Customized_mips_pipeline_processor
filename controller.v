@@ -1,12 +1,12 @@
 `include "defines.v"
 
-module controller (opCode, branchEn, EXE_CMD, Branch_command, Is_Imm, ST_or_BNE, WB_EN, MEM_R_EN, MEM_W_EN, hazard_detected,Is_Comp,MOV_EN,Is_Mul,is_jump);
-  input hazard_detected;
+module controller (rst,opCode, branchEn, EXE_CMD, Branch_command, Is_Imm, ST_or_BNE, WB_EN, MEM_R_EN,is_CLR, MEM_W_EN, hazard_detected,Is_Comp,MOV_EN,Is_Mul,is_jump);
+  input hazard_detected,rst;
   input [`OP_CODE_LEN-1:0] opCode;
   output reg branchEn;
   output reg [`EXE_CMD_LEN-1:0] EXE_CMD;
   output reg [1:0] Branch_command;
-  output reg Is_Imm, ST_or_BNE, WB_EN , MOV_EN, MEM_R_EN, MEM_W_EN,Is_Comp,Is_Mul,is_jump;
+  output reg Is_Imm, ST_or_BNE, WB_EN , MOV_EN, MEM_R_EN, MEM_W_EN,Is_Comp,Is_Mul,is_jump,is_CLR;
 
   always @ ( * ) begin
     if (hazard_detected == 0) begin
@@ -28,6 +28,7 @@ module controller (opCode, branchEn, EXE_CMD, Branch_command, Is_Imm, ST_or_BNE,
         // I-type operations
         `OP_ADDI: begin EXE_CMD <= `EXE_ADD; WB_EN <= 1; Is_Imm <= 1; end
         `OP_MOV: begin EXE_CMD <= `EXE_NO_OPERATION; Is_Imm <= 1;MOV_EN<=1; end
+        `OP_CLR: begin EXE_CMD <= `EXE_NO_OPERATION; Is_Imm <= 0;is_CLR<=1; end
         // `OP_SUBI: begin EXE_CMD <= `EXE_SUB; WB_EN <= 1; Is_Imm <= 1; end
         // memory operations
         `OP_LD: begin EXE_CMD <= `EXE_ADD; WB_EN <= 1; Is_Imm <= 1; ST_or_BNE <= 1; MEM_R_EN <= 1; end
@@ -43,5 +44,16 @@ module controller (opCode, branchEn, EXE_CMD, Branch_command, Is_Imm, ST_or_BNE,
     else if (hazard_detected ==  1) begin
       {EXE_CMD, WB_EN, MEM_W_EN} <= 0;
     end
+    if(rst == 1)
+      {branchEn, EXE_CMD, Branch_command, Is_Imm, ST_or_BNE, WB_EN, MEM_R_EN, MEM_W_EN} <= 0;
+
+  end
+  always @(opCode)
+  begin
+    // $display("the exe command is: %b",EXE_CMD);
+    // $display("the jump situation is: %b",is_jump);
+    // $display("the immediate check is: %b",Is_Imm);
+    // $display("the wb check is: %b",WB_EN);
+
   end
 endmodule // controller

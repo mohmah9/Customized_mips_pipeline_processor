@@ -28,5 +28,9 @@ module EXE2MEM (clk, rst, WB_EN_IN, MEM_R_EN_IN, MEM_W_EN_IN, PCIn, ALUResIn, ST
       COMP_EN_OUT <= COMP_EN_IN;
       MUL_EN_OUT <= MUL_EN_IN;
     end
+
   end
+//   always @(negedge clk)begin
+//     $display("EXE2MEM dest  is : %b",dest);   
+// end
 endmodule // EXE2MEM

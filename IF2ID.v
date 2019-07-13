@@ -22,5 +22,10 @@ module IF2ID (clk, rst, flush, freeze, PCIn, instructionIn, PC, instruction);
         end
       end
     end
+    // $display("IF2ID PC is : %b",PC);
+
   end
+//   always @ (negedge clk) begin
+//     $display("IF2ID instruction is : %b",instruction);
+// end
 endmodule // IF2ID

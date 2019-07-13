@@ -19,7 +19,7 @@ module MIPS_Processor (input CLOCK_50, input rst, input forward_EN);
 	wire MEM_R_EN_ID, MEM_R_EN_EXE, MEM_R_EN_MEM, MEM_R_EN_WB;
 	wire MEM_W_EN_ID, MEM_W_EN_EXE, MEM_W_EN_MEM;
 	wire WB_EN_ID, WB_EN_EXE, WB_EN_MEM, WB_EN_WB;
-	wire hazard_detected, is_imm, ST_or_BNE,is_comp,move_en,COMP_EN_OUT,Is_Mul,MUL_EN_2WB,COMP_EN_2WB,comp_wb2reg,mul_wb2reg,jump_EN_IN;
+	wire hazard_detected, is_imm, ST_or_BNE,is_comp,move_en,COMP_EN_OUT,Is_Mul,MUL_EN_2WB,COMP_EN_2WB,comp_wb2reg,mul_wb2reg,jump_EN_IN,CLR_EN;
 
 	regFile regFile(
 		// INPUTS
@@ -33,6 +33,7 @@ module MIPS_Processor (input CLOCK_50, input rst, input forward_EN);
 		.isMove(move_en),
 		.isComp(comp_wb2reg),
 		.is_mul(mul_wb2reg),
+		.is_clr(is_CLR),
 		.High(HIGH2wb),
 		// OUTPUTS
 		.reg1(reg1_ID),
@@ -51,6 +52,7 @@ module MIPS_Processor (input CLOCK_50, input rst, input forward_EN);
 		.WB_EN_EXE(WB_EN_EXE),
 		.WB_EN_MEM(WB_EN_MEM),
 		.MEM_R_EN_EXE(MEM_R_EN_EXE),
+		.clk(clock),
 		// OUTPUTS
 		.branch_comm(branch_comm),
 		.hazard_detected(hazard_detected)
@@ -112,7 +114,9 @@ module MIPS_Processor (input CLOCK_50, input rst, input forward_EN);
 		.COMP_EN(is_comp),
 		.MOV_EN_OUT(move_en),
 		.MUL_EN(MUL_EN_OUT),
-		.jump_EN(jump_EN_IN)
+		.jump_EN(jump_EN_IN),
+		.is_CLR(CLR_EN)
+
 	);
 
 	EXEStage EXEStage (

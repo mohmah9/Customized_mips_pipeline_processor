@@ -48,6 +48,9 @@ module EXEStage (clk, EXE_CMD, val1_sel, val2_sel, ST_val_sel, val1, val2, ALU_r
     .aluOut(ALUResult),
     .high(high_OUT)
   );
+  // always@(negedge clk)begin
+  //   $display("EXE: ALUResult is : %b",ALUResult);  
+  //   end
   assign ST_value_out = val1;
   assign temp = MEM_W_EN2EXE | MEM_R_EN2EXE;
 endmodule // EXEStage
